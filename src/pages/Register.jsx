@@ -110,7 +110,7 @@ export const Register = () => {
                         ) : null}
                     </FormControl>
                     <FormControl>
-                        <FormLabel htmlFor="password">Contraseña</FormLabel>
+                        <FormLabel htmlFor="password">Nueva contraseña</FormLabel>
                        <Input id="password" type="text" value={values.password} onChange={handleChange} />
                         {errors.password && touched.password ? (
                             <div>{errors.password}</div>
