@@ -1,6 +1,6 @@
 
 import { db, auth } from '../firebaseConfig';
-import { collection, getDocs, addDoc, doc } from 'firebase/firestore';
+import { collection, getDocs, addDoc } from 'firebase/firestore';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 export function useFirebase(){
@@ -11,9 +11,12 @@ export function useFirebase(){
         return authData;
     }
 
-    async function saveCustomer(props){
-        const result = await setDoc(doc(db, 'customer'), props);
-        return result;
+    async function saveCustomer(props, authData){
+        const prospectData = {
+            ...props,
+            uid: authData.uid
+        };
+        return await addDoc(collection(db, 'customer'), prospectData);
     }
 
     async function getCostumers(){
@@ -26,11 +29,7 @@ export function useFirebase(){
     async function setCustomer(props){
         const { companyEmail, password } = props;
         const authData = await setAuthToken(companyEmail, password);
-        const prospectData = {
-            ...props,
-            uid: authData.uid
-        };
-        await addDoc(collection(db, 'customer'), prospectData);
+        saveCustomer(props, authData);
     }
 
     return {
