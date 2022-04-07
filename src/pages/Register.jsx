@@ -6,6 +6,8 @@ import { registerValidations, registerProps } from '../utils/forms.utils';
 
 export const Register = () => {
     const [ isLoading, setIsloading ] = useState(false);
+    const [ isShowPassword, setShowPassword]  = useState(false);
+
     const { setCustomer } = useFirebase();
 
     const { handleSubmit, handleChange, values, errors, touched } = useFormik({
@@ -15,6 +17,7 @@ export const Register = () => {
             setIsloading(true);
             setCustomer(values).then(() => {
                 setIsloading(false);
+                alert("client create successfully");
             }).catch(() => {
                 setIsloading(false);
             });
@@ -72,7 +75,7 @@ export const Register = () => {
                 )}
             </div>
             <div className="flex gap-2">
-                <div className="grid w-full">
+                <div className="grid gap-2 w-full">
                     <label htmlFor="companyEmployeeTotal">Número de empleados</label>
                     <input 
                         id="companyEmployeeTotal"
@@ -91,7 +94,7 @@ export const Register = () => {
                     <label htmlFor="companyPhone">Teléfono empresa</label>
                     <input 
                         id="companyPhone"
-                        type="phone"
+                        type="number"
                         name="companyPhone"
                         placeholder="Teléfono de contacto"
                         value={values.companyPhone}
@@ -103,21 +106,22 @@ export const Register = () => {
                     )}
                 </div>
             </div>
-            <div className="grid">
-                <label htmlFor="">Nueva contraseña</label>
-                <input 
-                    id="password"
-                    type="text"
-                    value={values.password}
-                    onChange={handleChange}
-                    className="border p-2 rounded-md"
-                />
+            <div className="grid gap-2">
+                <label htmlFor="password">Nueva contraseña</label>
+                <div className="flex justify-between border rounded-md">
+                    <input id="password" type={ isShowPassword ? 'text' : 'password'}  value={values.password} onChange={handleChange} placeholder="Tu contraseña" className="peer placeholder-transparent p-2 w-full" />
+                    <label onClick={()=>setShowPassword(!isShowPassword)} class="flex items-center bg-primary px-2 py-1 text-sm text-gray-600 font-mono cursor-pointer" for="toggle">
+                        {isShowPassword ? 'Mostrar' : 'Ocultar'}
+                    </label>
+                </div>
                 {errors.password && touched.password && (
                     <div>{errors.password}</div>
                 )}
             </div>
             <div>
-                <button type="submit" className="bg-primary p-2 w-full rounded-md hover:opacity-75" disabled={isLoading}>Registrarme</button>
+                <button type="submit" className={`p-2 w-full rounded-md hover:opacity-75 ${isLoading ? 'bg-gray-200' : 'bg-primary' }`} disabled={isLoading}>
+                    {isLoading ? "Creando perfil ..." : "Registrarme"}
+                </button>
             </div>
         </form>
         </div>

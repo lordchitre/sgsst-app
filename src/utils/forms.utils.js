@@ -17,29 +17,28 @@ export const registerProps = {
 
 export const registerValidations = Yup.object().shape({
     companyName: Yup.string()
-    .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('Required'),
-    companyEmail: Yup.string().email('Invalid email').required('Required'),
+    .min(2, 'Demaciado corto!')
+    .max(50, 'Demaciado largo!')
+    .required('Campo requerido'),
+    companyEmail: Yup.string().email('Invalid email').required('Campo requerido'),
     contactName: Yup.string()
-    .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('Required'),
+    .min(2, 'Demaciado corto!')
+    .max(50, 'Demaciado largo!')
+    .required('Campo requerido'),
     companyPhone: Yup.number()
-    .min(2, 'Too Short!')
-    .required('Required'),
+    .min(2, 'Demaciado corto!')
+    .required('Campo requerido'),
     companyEmployeeTotal: Yup.number()
-    .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('Required'),
+    .min(2, 'Demaciado corto!')
+    .max(50, 'Demaciado largo!')
+    .required('Campo requerido'),
     companyEmployeeTotal: Yup.number()
-    .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('Required'),
+    .min(2, 'Demaciado corto!')
+    .max(50, 'Demaciado largo!')
+    .required('Campo requerido'),
     password: Yup.string()
-    .min(8, 'Too Short!')
-    .required('Required')
-    .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.')
+    .min(8, 'Demaciado corto!')
+    .required('Campo requerido')
+    .matches(/[a-zA-Z]/, 'La contraseña solo puede contener letras latinas.')
   });
 
-  
