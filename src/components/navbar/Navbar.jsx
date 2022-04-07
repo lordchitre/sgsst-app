@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import Logo from '../../assets/logo.svg';
 
 export const Navbar = () => {
@@ -7,13 +7,13 @@ export const Navbar = () => {
         <img src={Logo} width="100" alt="" />
         <div className="flex gap-6">
           <div>
-            <Link to="/">
-              <a className="text-lg">Iniciar sesion</a>
+            <Link to="/" className="text-lg">
+              Iniciar sesion
             </Link>
           </div>
           <div>
-            <Link to="/register">
-              <a className="text-lg">Registrarme</a>
+            <Link to="/register" className="text-lg">
+              Registrarme
             </Link>
           </div>
         </div>
