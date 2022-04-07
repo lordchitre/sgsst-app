@@ -2,14 +2,16 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
+const firebaseApiKey = import.meta.env.VITE_REACT_APP_FIREBASE_API_KEY;
+const firebaseAppId = import.meta.env.VITE_REACT_APP_FIREBASE_APP_ID;
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDI2uxQT9yiU65eUioh9J8oyxt_Dicu4Vo",
+    apiKey: firebaseApiKey,
     authDomain: "bdlaudiaz.firebaseapp.com",
     projectId: "bdlaudiaz",
     storageBucket: "bdlaudiaz.appspot.com",
     messagingSenderId: "297204494972",
-    appId: "1:297204494972:web:84b0dd23db8ba6c7e10ff9",
+    appId: firebaseAppId,
     measurementId: "G-GY02FP08DC"
 };
 
