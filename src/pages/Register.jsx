@@ -22,8 +22,9 @@ export const Register = () => {
     });
 
   return (
-    <div className="px-6">
-        <div className="">
+    <div className="px-6 mt-5">
+        <div className="xl:px-96">
+        <p className="font-bold text-3xl">Registrarme como empresa</p>
         <form onSubmit={handleSubmit} className="grid gap-3 mt-5">
             <div className="grid gap-2">
                 <label htmlFor="companyName">Nombre empresa</label>
@@ -31,7 +32,8 @@ export const Register = () => {
                     id="companyName" 
                     type="text"
                     name="companyName"
-                    className="bg-gray-200 p-2 focus:ring-4 rounded-md"
+                    placeholder="Nombre legal de la empresa"
+                    className="border p-2 rounded-md"
                     value={values.companyName}
                     onChange={handleChange}
                 />
@@ -45,9 +47,11 @@ export const Register = () => {
                     id="contactName"
                     type="text"
                     name="contactName"
+                    placeholder="Nombre de responsable"
                     value={values.contactName}
                     onChange={handleChange}
-                    className="bg-gray-200 p-2 focus:ring-4 rounded-md"/>
+                    className="border p-2 rounded-md"
+                />
                 {errors.contactName && touched.contactName && (
                     <div>{errors.contactName}</div>
                 )}
@@ -58,9 +62,11 @@ export const Register = () => {
                     id="companyEmail"
                     type="email"
                     name="companyEmail"
+                    placeholder="Correo de contacto"
                     value={values.companyEmail}
                     onChange={handleChange}
-                    className="bg-gray-200 p-2 focus:ring-4 rounded-md"/>
+                    className="border p-2 rounded-md"
+                />
                 {errors.companyEmail && touched.companyEmail && (
                     <div>{errors.companyEmail}</div>
                 )}
@@ -72,9 +78,11 @@ export const Register = () => {
                         id="companyEmployeeTotal"
                         type="number" 
                         name="companyEmployeeTotal"
+                        placeholder="Número aproximado de empleados"
                         value={values.companyEmployeeTotal}
                         onChange={handleChange}
-                        className="bg-gray-200 p-2 focus:ring-4 rounded-md"/>
+                        className="border p-2 rounded-md"
+                    />
                     {errors.companyEmployeeTotal && touched.companyEmployeeTotal && (
                         <div>{errors.companyEmployeeTotal}</div>
                     )}
@@ -85,26 +93,29 @@ export const Register = () => {
                         id="companyPhone"
                         type="phone"
                         name="companyPhone"
+                        placeholder="Teléfono de contacto"
                         value={values.companyPhone}
                         onChange={handleChange}
-                        className="bg-gray-200 p-2 focus:ring-4 rounded-md"/>
+                        className="border p-2 rounded-md"
+                    />
                     {errors.companyPhone && touched.companyPhone && (
                         <div>{errors.companyPhone}</div>
                     )}
                 </div>
             </div>
             <div className="grid">
-                    <label htmlFor="">Nueva contraseña</label>
-                    <input 
-                        id="password"
-                        type="text"
-                        value={values.password}
-                        onChange={handleChange}
-                        className="bg-gray-200 p-2 focus:ring-4 rounded-md "/>
-                    {errors.password && touched.password && (
-                        <div>{errors.password}</div>
-                    )}
-                </div>
+                <label htmlFor="">Nueva contraseña</label>
+                <input 
+                    id="password"
+                    type="text"
+                    value={values.password}
+                    onChange={handleChange}
+                    className="border p-2 rounded-md"
+                />
+                {errors.password && touched.password && (
+                    <div>{errors.password}</div>
+                )}
+            </div>
             <div>
                 <button type="submit" className="bg-primary p-2 w-full rounded-md hover:opacity-75" disabled={isLoading}>Registrarme</button>
             </div>
