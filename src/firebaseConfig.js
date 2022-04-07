@@ -15,6 +15,10 @@ const firebaseConfig = {
     measurementId: "G-GY02FP08DC"
 };
 
+export const tables = {
+    customer: 'customer'
+}
+
 const app = initializeApp(firebaseConfig);
 
 export const db = getFirestore(app);
