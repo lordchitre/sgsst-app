@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useFirebase } from "../hooks/useFirebase";
 import { useFormik } from "formik";
+import { useDispatch } from 'react-redux';
 
 import { registerValidations, registerProps } from "../utils/forms.utils";
+import { onAuthenticate } from '../redux/authSlice';
 
 export const Register = () => {
   const [isLoading, setIsloading] = useState(false);
@@ -13,6 +15,7 @@ export const Register = () => {
   });
 
   const { setCustomer } = useFirebase();
+  const dispatch = useDispatch();
 
   const { handleSubmit, handleChange, values, errors, touched } = useFormik({
     initialValues: registerProps,
@@ -23,6 +26,7 @@ export const Register = () => {
         .then(() => {
           setIsloading(false);
           alert("client create successfully");
+          dispatch(onAuthenticate(values));
           setIsError({ state: false })
         })
         .catch(() => {
