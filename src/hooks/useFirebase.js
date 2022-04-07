@@ -11,12 +11,14 @@ export function useFirebase(){
         return authData;
     }
 
-    async function saveCustomer(props, authData){
+    async function saveCustomer(props){
         const prospectData = {
             ...props,
-            uid: authData.uid
         };
-        return await addDoc(collection(db, 'customer'), prospectData);
+        
+        const customerCol = collection(db, 'customer');
+
+        return await addDoc(customerCol, prospectData);
     }
 
     async function getCostumers(){
@@ -27,9 +29,7 @@ export function useFirebase(){
     }
 
     async function setCustomer(props){
-        const { companyEmail, password } = props;
-        const authData = await setAuthToken(companyEmail, password);
-        saveCustomer(props, authData);
+        saveCustomer(props);
     }
 
     return {
