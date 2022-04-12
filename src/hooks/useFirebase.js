@@ -1,40 +1,59 @@
 
-import { db, auth } from '../firebaseConfig';
-import { collection, getDocs, addDoc } from 'firebase/firestore';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+// import { useState } from 'react';
+// import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 
-export function useFirebase(){
+// import { db, auth, tables } from '../firebaseConfig';
+// import { collection, getDocs, addDoc } from 'firebase/firestore';
+// import { createUserWithEmailAndPassword, deleteUser, getAuth } from 'firebase/auth';
 
-    async function setAuthToken(email, password){
-        const credentials = await createUserWithEmailAndPassword(auth, email, password);
-        const authData = credentials?.user;
-        return authData;
-    }
 
-    async function saveCustomer(props, authData){
-        const prospectData = {
-            ...props,
-            uid: authData.uid
-        };
-        return await addDoc(collection(db, 'customer'), prospectData);
-    }
+// export function useFirebase() {
+//     async function saveCustomer(props, user = null) {
+//         const uid = user?.uid;
 
-    async function getCostumers(){
-        const customerCol = collection(db, 'customer');
-        const customerSnapshot = await getDocs(customerCol);
-        const customerList = customerSnapshot.docs.map(doc => doc.data());
-        return customerList;
-    }
+//         const prospectData = {
+//             ...props,
+//             uid,
+//         };
 
-    async function setCustomer(props){
-        const { companyEmail, password } = props;
-        const authData = await setAuthToken(companyEmail, password);
-        saveCustomer(props, authData);
-    }
+//         const customerCol = collection(db, tables.customer);
+//         return await addDoc(customerCol, prospectData);
+//     }
 
-    return {
-        getCostumers,
-        setCustomer
-    }   
-}
+//     async function getCostumers() {
+//         const customerCol = collection(db, tables.customer);
+//         const customerSnapshot = await getDocs(customerCol);
+//         const customerList = customerSnapshot.docs.map(doc => doc.data());
+//         return customerList;
+//     }
+
+//     async function setCustomer(props) {
+//         const { companyEmail, password } = props;
+
+//         const [
+//             createUserWithEmailAndPassword,
+//             user,
+//             loading,
+//             error,
+//         ] = useCreateUserWithEmailAndPassword(auth);
+
+//         saveCustomer(props, user).then((response) => {
+//             return Promise.resolve(user);
+//         }).catch((err) => {
+//             console.error(err);
+//             return Promise.reject(err);
+//         });
+
+//         // await createAuthentication(companyEmail, password).then(({ user }) => {
+
+//         // }).catch((err) => {
+//         //     return Promise.reject(err);
+//         // });
+//     }
+
+//     return {
+//         getCostumers,
+//         setCustomer
+//     }
+// }
 
