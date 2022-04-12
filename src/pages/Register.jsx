@@ -1,49 +1,30 @@
-import { useState } from "react";
-import { useFirebase } from "../hooks/useFirebase";
-import { useFormik } from "formik";
-import { useDispatch } from 'react-redux';
-
-import { registerValidations, registerProps } from "../utils/forms.utils";
-import { onAuthenticate } from '../redux/authSlice';
+import { useRegister } from "../hooks/useRegister";
+import { Button } from "../components/button/Button";
 
 export const Register = () => {
-  const [isLoading, setIsloading] = useState(false);
-  const [isShowPassword, setShowPassword] = useState(false);
-  const [isError, setIsError] = useState({
-    state: false,
-    message: null,
-  });
+  const {
+    formikSubmit,
+    formikValues,
+    formikOnChange,
+    formikTouched,
+    formikErrors,
+    isShowPassword,
+    isLoading,
+    isError,
+    setShowPassword,
+  } = useRegister();
 
-  const { setCustomer } = useFirebase();
-  const dispatch = useDispatch();
-
-  const { handleSubmit, handleChange, values, errors, touched } = useFormik({
-    initialValues: registerProps,
-    validationSchema: registerValidations,
-    onSubmit: (values) => {
-      setIsloading(true);
-      setCustomer(values)
-        .then(() => {
-          setIsloading(false);
-          alert("client create successfully");
-          dispatch(onAuthenticate(values));
-          setIsError({ state: false })
-        })
-        .catch(() => {
-          setIsloading(false);
-          setIsError({
-            state: true,
-            message: "El usuario ya existe!"
-          })
-        });
-    },
-  });
+  const buttonSubmitProps = {
+    isLoading,
+    isDisabled: isLoading,
+    type: "submit",
+  };
 
   return (
     <div className="px-6 mt-5">
       <div className="xl:px-96">
         <p className="font-bold text-3xl">Registrarme como empresa</p>
-        <form onSubmit={handleSubmit} className="grid gap-3 mt-5">
+        <form onSubmit={formikSubmit} className="grid gap-3 mt-5">
           <div className="grid gap-2">
             <label htmlFor="companyName">Nombre empresa</label>
             <input
@@ -52,11 +33,11 @@ export const Register = () => {
               name="companyName"
               placeholder="Nombre legal de la empresa"
               className="border p-2 rounded-md"
-              value={values.companyName}
-              onChange={handleChange}
+              value={formikValues.companyName}
+              onChange={formikOnChange}
             />
-            {errors.companyName && touched.companyName && (
-              <div>{errors.companyName}</div>
+            {formikErrors.companyName && formikTouched.companyName && (
+              <div>{formikErrors.companyName}</div>
             )}
           </div>
           <div className="grid gap-2">
@@ -66,12 +47,12 @@ export const Register = () => {
               type="text"
               name="contactName"
               placeholder="Nombre de responsable"
-              value={values.contactName}
-              onChange={handleChange}
+              value={formikValues.contactName}
+              onChange={formikOnChange}
               className="border p-2 rounded-md"
             />
-            {errors.contactName && touched.contactName && (
-              <div>{errors.contactName}</div>
+            {formikErrors.contactName && formikTouched.contactName && (
+              <div>{formikErrors.contactName}</div>
             )}
           </div>
           <div className="grid gap-2">
@@ -81,12 +62,12 @@ export const Register = () => {
               type="email"
               name="companyEmail"
               placeholder="Correo de contacto"
-              value={values.companyEmail}
-              onChange={handleChange}
+              value={formikValues.companyEmail}
+              onChange={formikOnChange}
               className="border p-2 rounded-md"
             />
-            {errors.companyEmail && touched.companyEmail && (
-              <div>{errors.companyEmail}</div>
+            {formikErrors.companyEmail && formikTouched.companyEmail && (
+              <div>{formikErrors.companyEmail}</div>
             )}
           </div>
           <div className="flex gap-2">
@@ -97,13 +78,14 @@ export const Register = () => {
                 type="number"
                 name="companyEmployeeTotal"
                 placeholder="Número aproximado de empleados"
-                value={values.companyEmployeeTotal}
-                onChange={handleChange}
+                value={formikValues.companyEmployeeTotal}
+                onChange={formikOnChange}
                 className="border p-2 rounded-md"
               />
-              {errors.companyEmployeeTotal && touched.companyEmployeeTotal && (
-                <div>{errors.companyEmployeeTotal}</div>
-              )}
+              {formikErrors.companyEmployeeTotal &&
+                formikTouched.companyEmployeeTotal && (
+                  <div>{formikErrors.companyEmployeeTotal}</div>
+                )}
             </div>
             <div className="grid w-full">
               <label htmlFor="companyPhone">Teléfono empresa</label>
@@ -112,12 +94,12 @@ export const Register = () => {
                 type="number"
                 name="companyPhone"
                 placeholder="Teléfono de contacto"
-                value={values.companyPhone}
-                onChange={handleChange}
+                value={formikValues.companyPhone}
+                onChange={formikOnChange}
                 className="border p-2 rounded-md"
               />
-              {errors.companyPhone && touched.companyPhone && (
-                <div>{errors.companyPhone}</div>
+              {formikErrors.companyPhone && formikTouched.companyPhone && (
+                <div>{formikErrors.companyPhone}</div>
               )}
             </div>
           </div>
@@ -127,8 +109,8 @@ export const Register = () => {
               <input
                 id="password"
                 type={isShowPassword ? "text" : "password"}
-                value={values.password}
-                onChange={handleChange}
+                value={formikValues.password}
+                onChange={formikOnChange}
                 placeholder="Tu contraseña"
                 className="peer placeholder-transparent p-2 w-full"
               />
@@ -140,21 +122,13 @@ export const Register = () => {
                 {isShowPassword ? "Ocultar" : "Mostrar"}
               </label>
             </div>
-            {errors.password && touched.password && (
-              <div>{errors.password}</div>
+            {formikErrors.password && formikTouched.password && (
+              <div>{formikErrors.password}</div>
             )}
           </div>
           <p>{isError.state && isError.message}</p>
           <div>
-            <button
-              type="submit"
-              className={`p-2 w-full rounded-md hover:opacity-75 ${
-                isLoading ? "bg-gray-200" : "bg-primary"
-              }`}
-              disabled={isLoading}
-            >
-              {isLoading ? "Creando perfil ..." : "Registrarme"}
-            </button>
+            <Button {...buttonSubmitProps}>Registrarme</Button>
           </div>
         </form>
       </div>
